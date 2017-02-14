@@ -42,6 +42,7 @@ public class MyFrame3 extends JFrame implements ActionListener
     	}
       partenza.setText(MyFrame2.partenza());
       arrivo.setText(MyFrame2.arrivo());
+      setta();
       pane.add(partenza);
     	pane.add(arrivo);
     	pane.add(inviavalori);
@@ -58,6 +59,12 @@ public class MyFrame3 extends JFrame implements ActionListener
     String com = e.getActionCommand();
     if(com==pulsantes)
       salvataggiostazioni(path,ns);
+  }
+  public static void setta()
+  {
+      for(int i=0;i<ns;i++)
+        for(int j=0;j<ns;j++)
+            casellamatrice[i][j].setText(MyFrame2.matrice(i,j));
   }
 
 

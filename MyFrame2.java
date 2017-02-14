@@ -14,6 +14,7 @@ public class MyFrame2 extends JFrame  implements ActionListener
 	public final static String calc = "calc";
 	public static JTextField partenza;
 	public static JTextField arrivo;
+	public static int[][] matrice=new int[50][50];
 	JButton calcola = new JButton("calcola percorso");
 	JButton creacollegamenti = new JButton("crea collegamento");
 	public MyFrame2( )
@@ -26,6 +27,7 @@ public class MyFrame2 extends JFrame  implements ActionListener
 		calcola = new JButton("calcola percorso");
 		partenza = new JTextField(15);
 		arrivo = new JTextField(15);
+		matrice=new int[50][50];
 		areaCentrale.setLayout(new BoxLayout(areaCentrale, BoxLayout.Y_AXIS));
 		areaCentrale.add(creacollegamenti);
 		areaCentrale.add(calcola);
@@ -44,6 +46,10 @@ public class MyFrame2 extends JFrame  implements ActionListener
     { 
     		return arrivo.getText();
  	} 
+ 	public static String matrice(int i,int j)
+ 	{
+ 		return Integer.toString(matrice[i][j]);
+ 	}
 
 	public static void impostans(int nspassato)
 	{
@@ -57,22 +63,35 @@ public class MyFrame2 extends JFrame  implements ActionListener
 	{
 		return ns;
 	}
+	public void impostamatrice(int[][] matricepassata)
+	{	for(int i=0;i<ns;i++)
+			for(int j=0;j<ns;j++)
+					matrice[i][j]=matricepassata[i][j];
+	}
 	public void actionPerformed(ActionEvent e)
  	{	
  		String com = e.getActionCommand();
  		int ns1=ns;
-  		if(com==coll)
- 		{
- 		    MyFrame3 tabella = new MyFrame3();
-
-        }
-      	Scanner in = new Scanner(System.in);
+ 		Scanner in = new Scanner(System.in);
   	  	int[] arraytemp = new int[1000];
  	  	int[][] matrice = new int [ns][ns];
 		int[] distanze = new int[ns];
         int[] provenienze = new int[ns];
         boolean[] visitato = new boolean[ns];
         String path = "D:/Downloads/stazioni.txt";
+  		if(com==coll)
+ 		{
+ 		    MyFrame3 tabella = new MyFrame3();
+ 		    if(leggeredafile==1)
+ 		    {	
+ 		    	leggere(path,arraytemp);
+        		creamatrice(distanze,provenienze,visitato,matrice,arraytemp,ns1);
+ 		    	impostamatrice(matrice);
+ 		    	MyFrame3.setta();
+ 		    }
+
+        }
+
         if (com == MyFrame3.invia())
  		{	
  			ns1=MyFrame3.ns();
@@ -107,7 +126,6 @@ public class MyFrame2 extends JFrame  implements ActionListener
         	
         }
     }
- 
  	public static void calcolopercorso(int partenza,int arrivo,int ns,int[] distanze,int[] provenienze,boolean[] visitato,int[][] matrice)
 	{	String risultato="percorso a ritroso:";
 		int i,j;
