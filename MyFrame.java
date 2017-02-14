@@ -7,9 +7,7 @@ import java.lang.Math;
 
 public class MyFrame extends JFrame  implements ActionListener
 {
-	JTextField prima;
 	JButton caricafile;
-	JButton salvafile;
 	JButton creastazioni;
 	public final static String pulsantec = "puls1";
 	public final static String pulsantecs = "puls2";
@@ -21,9 +19,7 @@ public class MyFrame extends JFrame  implements ActionListener
 		Container areaCentrale = getContentPane();
 		caricafile = new JButton("Carica Stazioni da file");
 		creastazioni = new JButton("Creare Stazioni, prima inserire numero stazioni sul box sopra e premere salva se si vuole salvare su file");
-		prima = new JTextField(15);
 		areaCentrale.setLayout(new BoxLayout(areaCentrale, BoxLayout.Y_AXIS));
-		areaCentrale.add(prima);
 		areaCentrale.add(caricafile);
 		areaCentrale.add(creastazioni);
 		caricafile.addActionListener(this);	
@@ -43,17 +39,15 @@ public class MyFrame extends JFrame  implements ActionListener
 		{	
 			MyFrame2 mainFrame2 = new MyFrame2();
 			mainFrame2.show();
+			mainFrame2.invisible();
 			mainFrame2.leggere(path,arraytemp);
 		 	mainFrame2.leggeredafile();
 		}
 		else
 		if (com==pulsantecs)
 		{
-			String text = prima.getText();
-			int ns = Integer.parseInt (text);
-	       	MyFrame2 mainFrame2 = new MyFrame2();
+	    	MyFrame2 mainFrame2 = new MyFrame2();
 			mainFrame2.show();
-			mainFrame2.impostans(ns);
         }
 			
 	

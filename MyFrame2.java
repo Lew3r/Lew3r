@@ -8,14 +8,11 @@ import java.lang.Math;
 
 public class MyFrame2 extends JFrame  implements ActionListener
 {	
+	public static JTextField numerostazioni;
 	public static int ns;
 	public int leggeredafile;
 	public final static String coll = "coll";
-	public final static String calc = "calc";
-	public static JTextField partenza;
-	public static JTextField arrivo;
 	public static int[][] matrice=new int[50][50];
-	JButton calcola = new JButton("calcola percorso");
 	JButton creacollegamenti = new JButton("crea collegamento");
 	public MyFrame2( )
 	{
@@ -24,28 +21,14 @@ public class MyFrame2 extends JFrame  implements ActionListener
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Container areaCentrale = getContentPane();
 		creacollegamenti = new JButton("crea collegamento");
-		calcola = new JButton("calcola percorso");
-		partenza = new JTextField(15);
-		arrivo = new JTextField(15);
+		numerostazioni=new JTextField(10);
 		matrice=new int[50][50];
 		areaCentrale.setLayout(new BoxLayout(areaCentrale, BoxLayout.Y_AXIS));
 		areaCentrale.add(creacollegamenti);
-		areaCentrale.add(calcola);
-		areaCentrale.add(partenza);
-		areaCentrale.add(arrivo);
-		calcola.addActionListener(this);	
-		calcola.setActionCommand(this.calc);
+		areaCentrale.add(numerostazioni);
 		creacollegamenti.addActionListener(this);	
 		creacollegamenti.setActionCommand(this.coll);
 	}
-	public static String partenza()
-	{	
-  			return partenza.getText();
-	}		
- 	public static String arrivo()
-    { 
-    		return arrivo.getText();
- 	} 
  	public static String matrice(int i,int j)
  	{
  		return Integer.toString(matrice[i][j]);
@@ -68,65 +51,62 @@ public class MyFrame2 extends JFrame  implements ActionListener
 			for(int j=0;j<ns;j++)
 					matrice[i][j]=matricepassata[i][j];
 	}
+	public void invisible()
+	{
+		numerostazioni.setVisible(false);
+	}
 	public void actionPerformed(ActionEvent e)
  	{	
+
  		String com = e.getActionCommand();
- 		int ns1=ns;
- 		Scanner in = new Scanner(System.in);
-  	  	int[] arraytemp = new int[1000];
- 	  	int[][] matrice = new int [ns][ns];
-		int[] distanze = new int[ns];
-        int[] provenienze = new int[ns];
-        boolean[] visitato = new boolean[ns];
         String path = "D:/Downloads/stazioni.txt";
+        int[] arraytemp = new int[1000];
   		if(com==coll)
- 		{
- 		    MyFrame3 tabella = new MyFrame3();
+ 		{	
+ 			
  		    if(leggeredafile==1)
  		    {	
- 		    	leggere(path,arraytemp);
-        		creamatrice(distanze,provenienze,visitato,matrice,arraytemp,ns1);
+ 		        leggere(path,arraytemp);
+ 	  			int[][] matrice = new int [ns][ns];
+				int[] distanze = new int[ns];
+        		int[] provenienze = new int[ns];
+        		boolean[] visitato = new boolean[ns]; 	
+        		creamatrice(distanze,provenienze,visitato,matrice,arraytemp,ns);
  		    	impostamatrice(matrice);
  		    	MyFrame3.setta();
+ 		    	enable();
  		    }
+ 		    else
+ 		    {
+ 		    	ns=Integer.parseInt(numerostazioni.getText());
+ 				int[][] matrice = new int [ns][ns];
+				int[] distanze = new int[ns];
+        		int[] provenienze = new int[ns];
+        		boolean[] visitato = new boolean[ns]; 					    	
+ 		    }
+ 		    MyFrame3 tabella = new MyFrame3();
+ 		    creacollegamenti.setEnabled(false);
 
         }
 
         if (com == MyFrame3.invia())
- 		{	
- 			ns1=MyFrame3.ns();
+ 		{		
+ 			int ns1=MyFrame3.ns();
+ 			int[][] matrice = new int [ns][ns];
+			int[] distanze = new int[ns];
+        	int[] provenienze = new int[ns];
+        	boolean[] visitato = new boolean[ns];
  				for(int i=0; i<ns1;i++)
  					for(int j=0;j<ns1;j++)
  						matrice[i][j]=Integer.parseInt(MyFrame3.ritorno(i,j));
-
  			String partenzastring = MyFrame3.partenza();
 			int partenzaint = Integer.parseInt (partenzastring);
 			String arrivostring = MyFrame3.arrivo();
 			int arrivoint = Integer.parseInt (arrivostring);
         	calcolopercorso(partenzaint,arrivoint,ns1,distanze,provenienze,visitato,matrice);
-   		}
-
-
-        if(com==calc)
-        {
-        	if(leggeredafile==1)
-        	{	
-        		int i=0,j=0,k=0,t=0;
-				int prob=0;
-				leggere(path,arraytemp);
-        		creamatrice(distanze,provenienze,visitato,matrice,arraytemp,ns1);
-        		String partenzastring = partenza.getText();
-				int partenzaint = Integer.parseInt (partenzastring);
-				String arrivostring = arrivo.getText();
-				int arrivoint = Integer.parseInt (arrivostring);
-        		calcolopercorso(partenzaint,arrivoint,ns1,distanze,provenienze,visitato,matrice);
-        	}
-           		
-        		
-        	
-        }
+   		}    
     }
- 	public static void calcolopercorso(int partenza,int arrivo,int ns,int[] distanze,int[] provenienze,boolean[] visitato,int[][] matrice)
+   	public static void calcolopercorso(int partenza,int arrivo,int ns,int[] distanze,int[] provenienze,boolean[] visitato,int[][] matrice)
 	{	String risultato="percorso a ritroso:";
 		int i,j;
 			if (partenza>=ns|| arrivo>=ns)

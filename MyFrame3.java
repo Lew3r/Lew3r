@@ -40,8 +40,6 @@ public class MyFrame3 extends JFrame implements ActionListener
 
     		ns=MyFrame2.ns();
     	}
-      partenza.setText(MyFrame2.partenza());
-      arrivo.setText(MyFrame2.arrivo());
       setta();
       pane.add(partenza);
     	pane.add(arrivo);
@@ -66,8 +64,6 @@ public class MyFrame3 extends JFrame implements ActionListener
         for(int j=0;j<ns;j++)
             casellamatrice[i][j].setText(MyFrame2.matrice(i,j));
   }
-
-
 	public static String ritorno(int i,int j)
 	{	
 		return casellamatrice[i][j].getText();
