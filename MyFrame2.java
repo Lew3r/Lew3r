@@ -8,7 +8,6 @@ import java.lang.Math;
 
 public class MyFrame2 extends JFrame  implements ActionListener
 {	
-	public int salva;
 	public static int ns;
 	public int leggeredafile;
 	public final static String coll = "coll";
@@ -54,10 +53,6 @@ public class MyFrame2 extends JFrame  implements ActionListener
 	{
 		leggeredafile=1;
 	}
-	public void salva()
-	{
-		salva=1;
-	}
 	public static  int ns()
 	{
 		return ns;
@@ -66,13 +61,10 @@ public class MyFrame2 extends JFrame  implements ActionListener
  	{	
  		String com = e.getActionCommand();
  		int ns1=ns;
- 		//int part=1100;
- 		//int arr=1000;
- 		if(com==coll)
+  		if(com==coll)
  		{
  		    MyFrame3 tabella = new MyFrame3();
- 		   	//part=Integer.parseInt(MyFrame3.partenza());
- 		    //arr=Integer.parseInt(MyFrame3.arrivo());
+
         }
       	Scanner in = new Scanner(System.in);
   	  	int[] arraytemp = new int[1000];
@@ -114,9 +106,7 @@ public class MyFrame2 extends JFrame  implements ActionListener
         		
         	
         }
-        if (salva==1)
-        	salvataggiostazioni(matrice,path,ns1);
- 	}
+    }
  
  	public static void calcolopercorso(int partenza,int arrivo,int ns,int[] distanze,int[] provenienze,boolean[] visitato,int[][] matrice)
 	{	String risultato="percorso a ritroso:";
@@ -209,81 +199,11 @@ public class MyFrame2 extends JFrame  implements ActionListener
 	{	
 
 		int t=0;
-    	System.out.println("il numero di stazioni sono "+ ns1);
     	for(int i=0;i<ns1;i++)
     		for(int j=0;j<ns1;j++)
     		{	
     			matrice[i][j]=arraytemp[t];
-    			System.out.println("posizione "+i + " "+ j + " valore "+matrice[i][j]);
-    			t++;
+       			t++;
     		} 		
     }
-    public static void stampamatrice(int[][] matrice, int ns)
-	{
-		for(int i=0;i<ns;i++)
-			for(int j=0;j<ns;j++)
-				System.out.println("posizione "+i + " "+ j + " valore "+matrice[i][j]);
-	}
-	public static void salvataggiostazioni(int[][]matrice, String path, int ns)
-	{	
-		String stazioni="";
-		for(int i=0;i<ns;i++)
-	    	for(int j=0;j<ns;j++)
-	    		stazioni = stazioni+matrice[i][j]+"a";
-		try 
-		{
-		File file = new File(path);
-		if (file.exists())
-			System.out.println("Il file " + path + " gia esiste ");
-		   	else 
-		   		if (file.createNewFile())
-		       		System.out.println("Il file " + path + " è stato creato ");
-		   		else
-		      		System.out.println("Il file " + path + " non può essere creato ");
-	  	} 
-		catch (IOException e) 
-	    {
-		    e.printStackTrace();
-	   	}
-		try
-		{
-		   	File file = new File(path);
-		    FileWriter fw = new FileWriter(file);
-		   	fw.write(stazioni);
-		   	fw.flush();
-		   	fw.close();
-		   	System.out.println("Il file stazioni è stato salvato");
-	   	}
-	   	catch(IOException e)
-	   	{
-	       	e.printStackTrace();
-	   	}
-		
-	}
-	public static void creacollegamentonorandom(int ns, int[][] matrice, Scanner in)
-	{
-		int collegamento;
-		System.out.println("inserisci <0> per assenza di collegamento");
-       	for(int i=0;i<ns;i++)
-		{
-			for(int j=i;j<ns;j++)
-			{
-				if(i!=j)
-				{	System.out.println("inserisci collegamento dalla stazione " + i + " alla stazione " + j );
-					collegamento= in.nextInt();
-					if(collegamento!=0)
-					{
-						matrice[i][j]= collegamento;
-						matrice[j][i]= collegamento;
-					}
-					else
-					{
-						matrice[i][j]=999;
-						matrice[j][i]=999;
-					}
-				}
-			}
-		}	
-
-	}
- }
+}
