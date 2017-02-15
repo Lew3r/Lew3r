@@ -18,7 +18,7 @@ public class MyFrame extends JFrame  implements ActionListener
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Container areaCentrale = getContentPane();
 		caricafile = new JButton("Carica Stazioni da file");
-		creastazioni = new JButton("Creare Stazioni, prima inserire numero stazioni sul box sopra e premere salva se si vuole salvare su file");
+		creastazioni = new JButton("Creare Stazioni");
 		areaCentrale.setLayout(new BoxLayout(areaCentrale, BoxLayout.Y_AXIS));
 		areaCentrale.add(caricafile);
 		areaCentrale.add(creastazioni);
@@ -38,8 +38,19 @@ public class MyFrame extends JFrame  implements ActionListener
  		if (com == pulsantec)
 		{	
 			MyFrame2 mainFrame2 = new MyFrame2();
-			mainFrame2.show();
+			
 			mainFrame2.invisible();
+			try 
+    		{
+        		File file = new File(path);
+        		FileReader fr = new FileReader(file);
+        	    fr.close();	
+        	    mainFrame2.show();
+       		}
+     		catch(IOException error) 
+   			{ 
+       			mainFrame2.dispose();;
+        	}
 			mainFrame2.leggere(path,arraytemp);
 		 	mainFrame2.leggeredafile();
 		}

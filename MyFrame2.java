@@ -8,6 +8,7 @@ import java.lang.Math;
 
 public class MyFrame2 extends JFrame  implements ActionListener
 {	
+	JLabel titolonstazioni;
 	public static JTextField numerostazioni;
 	public static int ns;
 	public int leggeredafile;
@@ -22,16 +23,21 @@ public class MyFrame2 extends JFrame  implements ActionListener
 		Container areaCentrale = getContentPane();
 		creacollegamenti = new JButton("crea collegamento");
 		numerostazioni=new JTextField(10);
+		titolonstazioni=new JLabel("Inserisci numero stazioni");
 		matrice=new int[50][50];
 		areaCentrale.setLayout(new BoxLayout(areaCentrale, BoxLayout.Y_AXIS));
 		areaCentrale.add(creacollegamenti);
+		areaCentrale.add(titolonstazioni);
 		areaCentrale.add(numerostazioni);
 		creacollegamenti.addActionListener(this);	
 		creacollegamenti.setActionCommand(this.coll);
 	}
  	public static String matrice(int i,int j)
  	{
- 		return Integer.toString(matrice[i][j]);
+ 		if(i!=j)
+ 			return Integer.toString(matrice[i][j]);
+ 		else
+ 			return Integer.toString(0);
  	}
 
 	public static void impostans(int nspassato)
@@ -54,6 +60,7 @@ public class MyFrame2 extends JFrame  implements ActionListener
 	public void invisible()
 	{
 		numerostazioni.setVisible(false);
+		titolonstazioni.setVisible(false);
 	}
 	public void actionPerformed(ActionEvent e)
  	{	
@@ -75,6 +82,7 @@ public class MyFrame2 extends JFrame  implements ActionListener
  		    	impostamatrice(matrice);
  		    	MyFrame3.setta();
  		    	enable();
+
  		    }
  		    else
  		    {
@@ -86,6 +94,8 @@ public class MyFrame2 extends JFrame  implements ActionListener
  		    }
  		    MyFrame3 tabella = new MyFrame3();
  		    creacollegamenti.setEnabled(false);
+ 		    tabella.setSize(1000,1000);
+ 
 
         }
 
@@ -112,49 +122,54 @@ public class MyFrame2 extends JFrame  implements ActionListener
 			if (partenza>=ns|| arrivo>=ns)
 				JOptionPane.showMessageDialog(null,"partenza o arrivo non valido riprova,le stazioni partono da 0 a "+ (ns-1) );
 			else
-			{	for (i=0; i<ns; i++)
-		    	{	
-		    		distanze[i] = 100;
-		    		provenienze[i] = -1;
-		    		visitato[i] = false;
-		    	}
-		    	int nodoAttuale, minDistanza;
-		 		nodoAttuale = partenza;
-				distanze[partenza] = minDistanza = 0;
-				while (nodoAttuale != arrivo && minDistanza != 100) 
-				{	
-		    		minDistanza = 100;
-		   			for (j=0; j<ns; j++)
-		   				if (!visitato[j] && distanze[j] < minDistanza) 
-		     			{
-		        			minDistanza =  distanze[j];
-		        			nodoAttuale = j;        		     		
-		     			}   		    	
-		   			visitato[nodoAttuale] = true; 
-		   			for (j=0; j<ns; j++)
-		   			{
-		   				if (matrice[nodoAttuale][j] != 100 && distanze[j] > distanze[nodoAttuale] + matrice[nodoAttuale][j])
-		   				{
-		   					distanze[j] = distanze[nodoAttuale] + matrice[nodoAttuale][j];
-		   					provenienze[j] = nodoAttuale;
-		               	}
-		   			}
-				}
-		        if(!visitato[arrivo])
-		        	JOptionPane.showMessageDialog(null,"Non esiste collegamento");
-		         else
-		        {
-		        	
-		         	i = arrivo;
-		       		while (i != partenza) 
-		      			{	
-		      				risultato=risultato+" Stazione toccata: " +i;
-		   	           		i = provenienze[i];
-		      			}
-		      			risultato=risultato + "Stazione toccata: "+ i;
-					JOptionPane.showMessageDialog(null,"Ci mette " + distanze[arrivo]+ "minuti " + risultato);
-		        }
-		    }
+			{	
+				if(partenza!=arrivo)
+				{	for (i=0; i<ns; i++)
+			    	{	
+			    		distanze[i] = 100;
+			    		provenienze[i] = -1;
+			    		visitato[i] = false;
+			    	}
+			    	int nodoAttuale, minDistanza;
+			 		nodoAttuale = partenza;
+					distanze[partenza] = minDistanza = 0;
+					while (nodoAttuale != arrivo && minDistanza != 100) 
+					{	
+			    		minDistanza = 100;
+			   			for (j=0; j<ns; j++)
+			   				if (!visitato[j] && distanze[j] < minDistanza) 
+			     			{
+			        			minDistanza =  distanze[j];
+			        			nodoAttuale = j;        		     		
+			     			}   		    	
+			   			visitato[nodoAttuale] = true; 
+			   			for (j=0; j<ns; j++)
+			   			{
+			   				if (matrice[nodoAttuale][j] != 100 && distanze[j] > distanze[nodoAttuale] + matrice[nodoAttuale][j])
+			   				{
+			   					distanze[j] = distanze[nodoAttuale] + matrice[nodoAttuale][j];
+			   					provenienze[j] = nodoAttuale;
+			               	}
+			   			}
+					}
+			        if(!visitato[arrivo])
+			        	JOptionPane.showMessageDialog(null,"Non esiste collegamento");
+			         else
+			        {
+			        	
+			         	i = arrivo;
+			       		while (i != partenza) 
+			      			{	
+			      				risultato=risultato+" Stazione toccata: " +i;
+			   	           		i = provenienze[i];
+			      			}
+			      			risultato=risultato + "Stazione toccata: "+ i;
+						JOptionPane.showMessageDialog(null,"Ci mette " + distanze[arrivo]+ "minuti " + risultato);
+			        }
+			    }
+			    else
+			    	JOptionPane.showMessageDialog(null,"stazione di partenza = stazione di arrivo");
+			}
 
 	}
  	public static void leggere(String path, int[] arraytemp)
@@ -188,8 +203,8 @@ public class MyFrame2 extends JFrame  implements ActionListener
         }
      	catch(IOException e) 
    		{ 
-       		e.printStackTrace();
-    	}
+       		JOptionPane.showMessageDialog(null,"Il file non esiste");;
+        }
     	int radice = (int)Math.sqrt(k);
     	impostans(radice);
     }

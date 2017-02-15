@@ -8,49 +8,82 @@ import java.lang.Math;
 
 public class MyFrame3 extends JFrame implements ActionListener
 {	
-  public static JTextField partenza  = new JTextField(5);
-  public static JTextField arrivo = new JTextField(5);
+  public static JTextField partenza  = new JTextField(8);
+  public static JTextField arrivo = new JTextField(8);
 	public static int ns;
 	public final static String invia = "puls1";
   public final static String pulsantes = "puls2A";
 	public final static JTextField[][] casellamatrice= new JTextField[100][100];
+	JLabel titolo,titolo1;
 	public MyFrame3()
 	{	
 
-		super("Iniziale");
+		super("Collegamenti");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    pack();
-    setVisible(true);
-    Container pane= getContentPane();
-    JButton  inviavalori = new JButton("invia valori");
-    JButton salvafile = new JButton("Salva le stazioni nel file Stazioni");
-    pane.setLayout(new GridBagLayout());
-    GridBagConstraints c = new GridBagConstraints();
-   	c.fill = GridBagConstraints.HORIZONTAL;
-   	for(int i=0; i< MyFrame2.ns();i++)
+    	pack();
+    	setVisible(true);
+    	Container pane= getContentPane();
+    	JButton  inviavalori = new JButton("calcola percorso");
+    	JButton salvafile = new JButton("Salva le stazioni su file");
+    	pane.setLayout(new GridBagLayout());
+    	GridBagConstraints c = new GridBagConstraints();
+   		c.fill = GridBagConstraints.HORIZONTAL;
+   		int j=0;
+     	for(int i=0; i< MyFrame2.ns();i++)
     	{
-    		for(int j=0;j< MyFrame2.ns();j++)
-    		{
-    			casellamatrice[i][j]  = new JTextField(5);
+    		for(j=0;j< MyFrame2.ns();j++)
+    		{	if(i==0)
+    			{
+    				titolo = new JLabel("stazione " + j);
+    				c.gridx = j+1;
+    				c.gridy = 0;
+    				pane.add(titolo,c);
+    			}
+    			casellamatrice[i][j]  = new JTextField(8);
     			c.fill = GridBagConstraints.HORIZONTAL;
-    			c.gridx = j;
-    			c.gridy = i;
+    			c.gridx = j+1;
+    			c.gridy = i+1;
       			pane.add(casellamatrice[i][j], c);
+      			if(i==j)
+      			{
+        			casellamatrice[i][j].setEditable(false);
+      			}
     		}
+    		 titolo = new JLabel("stazione "+ i);
+    		c.gridx = j+1;
+    		c.gridy = i+1;
+    		pane.add(titolo,c);
 
-    		ns=MyFrame2.ns();
-    	}
-      setta();
-      pane.add(partenza);
-    	pane.add(arrivo);
-    	pane.add(inviavalori);
-      pane.add(salvafile);
+       	}
+    	ns=MyFrame2.ns();
+    	setta();
+       	titolo = new JLabel("Staz. Part.");
+    	titolo1 = new JLabel("Staz. Arr.");
+    	c.gridx = 1;
+    	c.gridy = ns+1;
+    	pane.add(titolo,c);
+    	c.gridy = ns+2;
+        pane.add(partenza,c);
+        c.gridx = 2;
+     	c.gridy = ns+1;
+     	pane.add(titolo1,c);
+    	c.gridx = 2;
+     	c.gridy = ns+2;
+    	pane.add(arrivo,c);
+    	c.gridx = 1;
+    	c.gridy = ns+3;
+    	pane.add(inviavalori,c);
+    	c.gridx = ns+4;
+    	pane.add(salvafile,c);
+
+
+      	
     	MyFrame2 listener = new MyFrame2();
-      salvafile.addActionListener(this);  
-      salvafile.setActionCommand(this.pulsantes);
+      	salvafile.addActionListener(this);  
+      	salvafile.setActionCommand(this.pulsantes);
     	inviavalori.addActionListener(listener);
    		inviavalori.setActionCommand(this.invia);
-  }
+  	}
   public void actionPerformed(ActionEvent e)
   { 
     String path = "D:/Downloads/stazioni.txt";
