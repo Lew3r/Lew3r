@@ -14,7 +14,7 @@ public class MyFrame3 extends JFrame implements ActionListener
 	public static int ns;
 	public final static String invia = "puls1";
 	public final static String pulsantes = "puls2A";
-	public final static JTextField[][] casellamatrice= new JTextField[100][100];
+	public final static JTextField[][] casellamatrice= new JTextField[50][50];
 	JLabel titolo,titolo1;
 	public MyFrame3()
 	{	
@@ -24,10 +24,12 @@ public class MyFrame3 extends JFrame implements ActionListener
     	pack();
     	setVisible(true);
     	Container pane= getContentPane();
+    	JScrollPane scrollPane = new JScrollPane(pane);
+    	setContentPane(scrollPane);
     	partenza  = new JTextField(8);
     	arrivo = new JTextField(8);
     	JButton  inviavalori = new JButton("calc.percorso");
-    	salvafile = new JButton("Salva le stazioni su file");
+    	salvafile = new JButton("Salva stazioni su file");
     	pane.setLayout(new GridBagLayout());
     	GridBagConstraints c = new GridBagConstraints();
    		c.fill = GridBagConstraints.HORIZONTAL;
@@ -37,7 +39,7 @@ public class MyFrame3 extends JFrame implements ActionListener
     		for(j=0;j< MyFrame2.ns();j++)
     		{	if(i==0)
     			{
-    				titolo = new JLabel("stazione arrivo " + j+ " ");
+    				titolo = new JLabel("staz.arr. " + j+ " ");
     				c.gridx = j+1;
     				c.gridy = 0;
     				pane.add(titolo,c);
@@ -52,7 +54,7 @@ public class MyFrame3 extends JFrame implements ActionListener
         			casellamatrice[i][j].setEditable(false);
       			}
     		}
-    		 titolo = new JLabel("stazione partenza "+ i);
+    		 titolo = new JLabel("staz.part."+ i);
     		c.gridx = j+1;
     		c.gridy = i+1;
     		pane.add(titolo,c);
@@ -60,8 +62,8 @@ public class MyFrame3 extends JFrame implements ActionListener
        	}
     	ns=MyFrame2.ns();
     	setta();
-       	titolo = new JLabel("Staz. Part.");
-    	titolo1 = new JLabel("Staz. Arr.");
+       	titolo = new JLabel("Staz.Part.");
+    	titolo1 = new JLabel("Staz.Arr.");
     	c.gridx = 1;
     	c.gridy = ns+1;
     	pane.add(titolo,c);
@@ -82,7 +84,8 @@ public class MyFrame3 extends JFrame implements ActionListener
         salvafile.addActionListener(this);  
       	salvafile.setActionCommand(this.pulsantes);
     	inviavalori.addActionListener(listener);
-   		inviavalori.setActionCommand(this.invia);	   
+   		inviavalori.setActionCommand(this.invia);
+
             
   	}
    	

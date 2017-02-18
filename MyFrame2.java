@@ -82,8 +82,8 @@ public class MyFrame2 extends JFrame  implements ActionListener
  		    	impostamatrice(matrice);
  		    	MyFrame3.setta();
  		    	MyFrame3 tabella = new MyFrame3();
- 		    	tabella.setSize(1000,1000);
- 		    	dispose(); 		  	
+ 		    	tabella.pack();
+ 		 	    dispose(); 		  	
  		    }
  		    else
  		    {
