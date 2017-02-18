@@ -18,7 +18,6 @@ public class MyFrame2 extends JFrame  implements ActionListener
 	public MyFrame2( )
 	{
 		super("Collegamenti");
-		setSize(300,300);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		Container areaCentrale = getContentPane();
 		creacollegamenti = new JButton("crea collegamento");
@@ -29,6 +28,7 @@ public class MyFrame2 extends JFrame  implements ActionListener
 		areaCentrale.add(creacollegamenti);
 		areaCentrale.add(titolonstazioni);
 		areaCentrale.add(numerostazioni);
+		pack();
 		creacollegamenti.addActionListener(this);	
 		creacollegamenti.setActionCommand(this.coll);
 	}

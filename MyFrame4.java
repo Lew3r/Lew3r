@@ -7,6 +7,7 @@ import java.lang.Math;
 
 public class MyFrame4 extends JFrame  implements ActionListener
 {	
+	JLabel   labelindirizzo;
 	JButton  inviaindirizzo;
 	public static String path;
 	public static JTextField indirizzo;
@@ -14,14 +15,17 @@ public class MyFrame4 extends JFrame  implements ActionListener
 	public MyFrame4()
 	{	
 		super("Iniziale");
-		setSize(300,300);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		Container areaCentrale = getContentPane();
 		inviaindirizzo= new JButton("Salva indirizzo");
+		labelindirizzo= new JLabel("Inserisci path del file");
 		indirizzo= new JTextField(100);
 		areaCentrale.setLayout(new BoxLayout(areaCentrale, BoxLayout.Y_AXIS));
+		pack();
+		areaCentrale.add(labelindirizzo);
 		areaCentrale.add(indirizzo);
 		areaCentrale.add(inviaindirizzo);
+		pack();
 		inviaindirizzo.addActionListener(this);	
 	}
 	public void actionPerformed(ActionEvent e)
