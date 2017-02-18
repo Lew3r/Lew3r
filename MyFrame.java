@@ -6,7 +6,8 @@ import java.io.*;
 import java.lang.Math;
 
 public class MyFrame extends JFrame  implements ActionListener
-{
+{	
+	public static int leggerefile=0;
 	JButton caricafile;
 	JButton creastazioni;
 	public final static String pulsantec = "puls1";
@@ -31,35 +32,25 @@ public class MyFrame extends JFrame  implements ActionListener
 	public void actionPerformed(ActionEvent e)
  	{	
  		int[] arraytemp = new int[1000];
- 		String path = "D:/Downloads/stazioni.txt";
  		String com = e.getActionCommand();
    		int salva=0;
  		if (com == pulsantec)
-		{	
-			MyFrame2 mainFrame2 = new MyFrame2();
-			mainFrame2.invisible();
-			try 
-    		{
-        		File file = new File(path);
-        		FileReader fr = new FileReader(file);
-        	    fr.close();	
-        	    mainFrame2.show();
-       		}
-     		catch(IOException error) 
-   			{ 
-       			mainFrame2.dispose();;
-        	}
-			mainFrame2.leggere(path,arraytemp);
-		 	mainFrame2.leggeredafile();
+ 		{
+			MyFrame4 mainFrame4 = new MyFrame4();
+			leggerefile=1;
+			mainFrame4.scrivere0();
+			mainFrame4.show();
 		}
-		else
 		if (com==pulsantecs)
-		{
-	    	MyFrame2 mainFrame2 = new MyFrame2();
-	    	mainFrame2.show();
-        }
-			
-	
+			{
+	    		MyFrame2 mainFrame2 = new MyFrame2();
+	    		mainFrame2.show();
+        	}
+   		
+   	}
+   	public static int returnleggerefile()
+   	{
+   		return leggerefile;
    	}
 	
 	

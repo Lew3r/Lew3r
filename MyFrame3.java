@@ -91,20 +91,28 @@ public class MyFrame3 extends JFrame implements ActionListener
    	
 	 public void actionPerformed(ActionEvent e)
   { 
-    String path = "D:/Downloads/stazioni.txt";
+
+    
     String com = e.getActionCommand();
     if(com==pulsantes)
+    {
+       MyFrame4 mainFrame4 = new MyFrame4();
+        mainFrame4.scrivere();
+        mainFrame4.show();
+
+        String path = MyFrame4.returnpath();
+
     	try
     	{
     		for(int i=0;i<ns;i++)
     			for(int j=0;j<ns;j++)
     				Integer.parseInt(ritorno(i,j));
-    		salvataggiostazioni(path,ns);
     	}
     	catch(Exception error)
     	{
     		JOptionPane.showMessageDialog(null,"valori non numeri, salvataggio impedito");
     	}
+    }
       
   }
   public static void setta()
@@ -135,41 +143,5 @@ public class MyFrame3 extends JFrame implements ActionListener
 	{	
 		 return ns;
 	}
-  public static void salvataggiostazioni(String path, int ns)
-  { 
-    String stazioni="";
-    for(int i=0;i<ns;i++)
-        for(int j=0;j<ns;j++)
-          stazioni = stazioni+ritorno(i,j)+"a";
-    try 
-    {
-      File file = new File(path);
-      if (file.exists())
-          JOptionPane.showMessageDialog(null,"Il file " + path + " gia esiste ");
-     else 
-        if (file.createNewFile())
-          JOptionPane.showMessageDialog(null,"Il file " + path + " è stato creato ");
-        else
-           JOptionPane.showMessageDialog(null,"Il file " + path + " non può essere creato ");
-    } 
-    catch (IOException e) 
-    {
-      e.printStackTrace();
-    }
-    try
-    {
-        File file = new File(path);
-        FileWriter fw = new FileWriter(file);
-        fw.write(stazioni);
-        fw.flush();
-        fw.close();
-        JOptionPane.showMessageDialog(null,"I file stazioni verranno salvati");
-      }
-      catch(IOException e)
-      {
-          e.printStackTrace();
-      }
-    
-  }
-
- }
+ 
+}
