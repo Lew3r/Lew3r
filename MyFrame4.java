@@ -23,9 +23,6 @@ public class MyFrame4 extends JFrame  implements ActionListener
 		areaCentrale.add(indirizzo);
 		areaCentrale.add(inviaindirizzo);
 		inviaindirizzo.addActionListener(this);	
-		
-		
-
 	}
 	public void actionPerformed(ActionEvent e)
  	{	
@@ -128,10 +125,5 @@ public class MyFrame4 extends JFrame  implements ActionListener
 	        e.printStackTrace();
 	    }
 
-	}
-
-
-	
-
-   	
+	}   	
 }
