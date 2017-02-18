@@ -28,7 +28,6 @@ public class MyFrame extends JFrame  implements ActionListener
 		creastazioni.setActionCommand(this.pulsantecs);
 
 	}
-
 	public void actionPerformed(ActionEvent e)
  	{	
  		int[] arraytemp = new int[1000];
@@ -38,7 +37,6 @@ public class MyFrame extends JFrame  implements ActionListener
  		if (com == pulsantec)
 		{	
 			MyFrame2 mainFrame2 = new MyFrame2();
-			
 			mainFrame2.invisible();
 			try 
     		{
@@ -58,7 +56,7 @@ public class MyFrame extends JFrame  implements ActionListener
 		if (com==pulsantecs)
 		{
 	    	MyFrame2 mainFrame2 = new MyFrame2();
-			mainFrame2.show();
+	    	mainFrame2.show();
         }
 			
 	

@@ -8,23 +8,26 @@ import java.lang.Math;
 
 public class MyFrame3 extends JFrame implements ActionListener
 {	
-  public static JTextField partenza  = new JTextField(8);
-  public static JTextField arrivo = new JTextField(8);
+	public static JButton salvafile;	
+	public static JTextField partenza;
+	public static JTextField arrivo;
 	public static int ns;
 	public final static String invia = "puls1";
-  public final static String pulsantes = "puls2A";
+	public final static String pulsantes = "puls2A";
 	public final static JTextField[][] casellamatrice= new JTextField[100][100];
 	JLabel titolo,titolo1;
 	public MyFrame3()
 	{	
 
 		super("Collegamenti");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     	pack();
     	setVisible(true);
     	Container pane= getContentPane();
-    	JButton  inviavalori = new JButton("calcola percorso");
-    	JButton salvafile = new JButton("Salva le stazioni su file");
+    	partenza  = new JTextField(8);
+    	arrivo = new JTextField(8);
+    	JButton  inviavalori = new JButton("calc.percorso");
+    	salvafile = new JButton("Salva le stazioni su file");
     	pane.setLayout(new GridBagLayout());
     	GridBagConstraints c = new GridBagConstraints();
    		c.fill = GridBagConstraints.HORIZONTAL;
@@ -34,7 +37,7 @@ public class MyFrame3 extends JFrame implements ActionListener
     		for(j=0;j< MyFrame2.ns();j++)
     		{	if(i==0)
     			{
-    				titolo = new JLabel("stazione " + j);
+    				titolo = new JLabel("stazione arrivo " + j+ " ");
     				c.gridx = j+1;
     				c.gridy = 0;
     				pane.add(titolo,c);
@@ -49,7 +52,7 @@ public class MyFrame3 extends JFrame implements ActionListener
         			casellamatrice[i][j].setEditable(false);
       			}
     		}
-    		 titolo = new JLabel("stazione "+ i);
+    		 titolo = new JLabel("stazione partenza "+ i);
     		c.gridx = j+1;
     		c.gridy = i+1;
     		pane.add(titolo,c);
@@ -75,21 +78,31 @@ public class MyFrame3 extends JFrame implements ActionListener
     	pane.add(inviavalori,c);
     	c.gridx = ns+4;
     	pane.add(salvafile,c);
-
-
-      	
-    	MyFrame2 listener = new MyFrame2();
-      	salvafile.addActionListener(this);  
+       	MyFrame2 listener = new MyFrame2();
+        salvafile.addActionListener(this);  
       	salvafile.setActionCommand(this.pulsantes);
     	inviavalori.addActionListener(listener);
-   		inviavalori.setActionCommand(this.invia);
+   		inviavalori.setActionCommand(this.invia);	   
+            
   	}
-  public void actionPerformed(ActionEvent e)
+   	
+	 public void actionPerformed(ActionEvent e)
   { 
     String path = "D:/Downloads/stazioni.txt";
     String com = e.getActionCommand();
     if(com==pulsantes)
-      salvataggiostazioni(path,ns);
+    	try
+    	{
+    		for(int i=0;i<ns;i++)
+    			for(int j=0;j<ns;j++)
+    				Integer.parseInt(ritorno(i,j));
+    		salvataggiostazioni(path,ns);
+    	}
+    	catch(Exception error)
+    	{
+    		JOptionPane.showMessageDialog(null,"valori non numeri, salvataggio impedito");
+    	}
+      
   }
   public static void setta()
   {

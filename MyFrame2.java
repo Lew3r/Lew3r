@@ -14,12 +14,12 @@ public class MyFrame2 extends JFrame  implements ActionListener
 	public int leggeredafile;
 	public final static String coll = "coll";
 	public static int[][] matrice=new int[50][50];
-	JButton creacollegamenti = new JButton("crea collegamento");
+	public static JButton creacollegamenti = new JButton("crea collegamento");
 	public MyFrame2( )
 	{
 		super("Collegamenti");
 		setSize(300,300);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		Container areaCentrale = getContentPane();
 		creacollegamenti = new JButton("crea collegamento");
 		numerostazioni=new JTextField(10);
@@ -39,7 +39,6 @@ public class MyFrame2 extends JFrame  implements ActionListener
  		else
  			return Integer.toString(0);
  	}
-
 	public static void impostans(int nspassato)
 	{
 		ns=nspassato;
@@ -62,6 +61,7 @@ public class MyFrame2 extends JFrame  implements ActionListener
 		numerostazioni.setVisible(false);
 		titolonstazioni.setVisible(false);
 	}
+
 	public void actionPerformed(ActionEvent e)
  	{	
 
@@ -81,23 +81,31 @@ public class MyFrame2 extends JFrame  implements ActionListener
         		creamatrice(distanze,provenienze,visitato,matrice,arraytemp,ns);
  		    	impostamatrice(matrice);
  		    	MyFrame3.setta();
- 		    	enable();
-
+ 		    	MyFrame3 tabella = new MyFrame3();
+ 		    	tabella.setSize(1000,1000);
+ 		    	dispose(); 		  	
  		    }
  		    else
  		    {
- 		    	ns=Integer.parseInt(numerostazioni.getText());
- 				int[][] matrice = new int [ns][ns];
-				int[] distanze = new int[ns];
-        		int[] provenienze = new int[ns];
-        		boolean[] visitato = new boolean[ns]; 					    	
+ 		    	try
+ 		    	{
+ 		    		ns=Integer.parseInt(numerostazioni.getText());
+ 		    		int[][] matrice = new int [ns][ns];
+					int[] distanze = new int[ns];
+        			int[] provenienze = new int[ns];
+        			boolean[] visitato = new boolean[ns];
+        			MyFrame3 tabella = new MyFrame3();
+ 		    		tabella.setSize(1000,1000);
+ 		    		dispose(); 
+  				}
+ 				catch(Exception error)
+ 				{
+ 					JOptionPane.showMessageDialog(null,"Numero Fermate non valido");
+  				}
+ 						    	
  		    }
- 		    MyFrame3 tabella = new MyFrame3();
- 		    creacollegamenti.setEnabled(false);
- 		    tabella.setSize(1000,1000);
- 
-
-        }
+ 		    
+         }
 
         if (com == MyFrame3.invia())
  		{		
@@ -106,19 +114,32 @@ public class MyFrame2 extends JFrame  implements ActionListener
 			int[] distanze = new int[ns];
         	int[] provenienze = new int[ns];
         	boolean[] visitato = new boolean[ns];
+ 			try
+ 			{
  				for(int i=0; i<ns1;i++)
  					for(int j=0;j<ns1;j++)
- 						matrice[i][j]=Integer.parseInt(MyFrame3.ritorno(i,j));
- 			String partenzastring = MyFrame3.partenza();
-			int partenzaint = Integer.parseInt (partenzastring);
-			String arrivostring = MyFrame3.arrivo();
-			int arrivoint = Integer.parseInt (arrivostring);
-        	calcolopercorso(partenzaint,arrivoint,ns1,distanze,provenienze,visitato,matrice);
+ 						
+ 							matrice[i][j]=Integer.parseInt(MyFrame3.ritorno(i,j));
+ 							String partenzastring = MyFrame3.partenza();
+							int partenzaint = Integer.parseInt (partenzastring);
+							String arrivostring = MyFrame3.arrivo();
+							int arrivoint = Integer.parseInt (arrivostring);
+        					calcolopercorso(partenzaint,arrivoint,ns1,distanze,provenienze,visitato,matrice);
+
+ 			}
+ 			catch(Exception error2)
+ 			{
+ 				JOptionPane.showMessageDialog(null,"valore collegamento non valido");
+  			}
+ 			
    		}    
     }
    	public static void calcolopercorso(int partenza,int arrivo,int ns,int[] distanze,int[] provenienze,boolean[] visitato,int[][] matrice)
-	{	String risultato="percorso a ritroso:";
-		int i,j;
+	{	String[] risultato=new String[10];
+		String risultatos;
+
+		int i,j,k=0;
+
 			if (partenza>=ns|| arrivo>=ns)
 				JOptionPane.showMessageDialog(null,"partenza o arrivo non valido riprova,le stazioni partono da 0 a "+ (ns-1) );
 			else
@@ -160,16 +181,36 @@ public class MyFrame2 extends JFrame  implements ActionListener
 			         	i = arrivo;
 			       		while (i != partenza) 
 			      			{	
-			      				risultato=risultato+" Stazione toccata: " +i;
+			      				risultato[k]=" Stazione toccata: " +i;
 			   	           		i = provenienze[i];
+			   	           		k++;
 			      			}
-			      			risultato=risultato + "Stazione toccata: "+ i;
-						JOptionPane.showMessageDialog(null,"Ci mette " + distanze[arrivo]+ "minuti " + risultato);
+			      			risultato[k]= "Stazione toccata: "+ i;
+			      			k++;
+			  		      	risultatos=invertArray(risultato,k);
+						JOptionPane.showMessageDialog(null,"Ci mette " + distanze[arrivo]+ "minuti " + risultatos);
 			        }
 			    }
 			    else
 			    	JOptionPane.showMessageDialog(null,"stazione di partenza = stazione di arrivo");
 			}
+
+	}
+	public static  String invertArray(String[] array,int k)
+	{	
+		String risultato="";
+		int j=k-1;
+		String[] arrayinverso=new String[k];			
+		for (int i=0;i<k;i++)
+		{
+			arrayinverso[j]=array[i];
+			j--;			
+		}
+		for (int i=0;i<k;i++)
+		{
+			risultato=risultato+arrayinverso[i];	
+		}
+		return risultato;
 
 	}
  	public static void leggere(String path, int[] arraytemp)
