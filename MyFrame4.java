@@ -62,10 +62,27 @@ public class MyFrame4 extends JFrame  implements ActionListener
 			}
 		}
 		else
-		{	
+		{	int temp=0,indice=0;
 			int ns=MyFrame2.ns();
-			String path = MyFrame4.returnpath();
-    		try
+			String path = returnpath();
+			int dim=path.length();	
+			System.out.println(path.charAt(dim-1));	
+				if(path.charAt(dim-12)=='s'&& path.charAt(dim-11)=='t'&& path.charAt(dim-10)=='a'&& path.charAt(dim-9)=='z'&&
+				   path.charAt(dim-8)=='i'&& path.charAt(dim-7)=='o'&& path.charAt(dim-6)=='n'&& path.charAt(dim-5)=='i'&& 
+				   path.charAt(dim-4)=='.'&& path.charAt(dim-3)=='t'&& path.charAt(dim-2)=='x'&& path.charAt(dim-1)=='t')
+				{
+					for(int j=0;j<path.length();j++)
+						if(path.charAt(j)=='\\')
+						{
+							indice=j;
+							temp=1;
+
+						}
+					if(temp==0)
+						path= path.substring(dim-12);
+								
+				}
+	  		try
     		{
 
     			for(int i=0;i<ns;i++)
@@ -88,6 +105,10 @@ public class MyFrame4 extends JFrame  implements ActionListener
    	public static void scrivere0()
    	{
    		scrittura=0;
+   	}
+   	public static void scrivipath(String pathpassato)
+   	{
+   		path=pathpassato;
    	}
    	public static String returnpath()
    	{
@@ -112,7 +133,7 @@ public class MyFrame4 extends JFrame  implements ActionListener
 	    } 
 	    catch (IOException e) 
 	    {
-	    	e.printStackTrace();
+	    	JOptionPane.showMessageDialog(null,path + " non valido");
 	    }
 	    try
 	    {
@@ -126,7 +147,7 @@ public class MyFrame4 extends JFrame  implements ActionListener
 	    }
 	   	catch(IOException e)
 	    {
-	        e.printStackTrace();
+	        JOptionPane.showMessageDialog(null, path + " inserire path corretto");
 	    }
 
 	}   	
