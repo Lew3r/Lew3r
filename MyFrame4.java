@@ -74,9 +74,7 @@ public class MyFrame4 extends JFrame  implements ActionListener
 					for(int j=0;j<path.length();j++)
 						if(path.charAt(j)=='\\')
 						{
-							indice=j;
 							temp=1;
-
 						}
 					if(temp==0)
 						path= path.substring(dim-12);
@@ -88,7 +86,7 @@ public class MyFrame4 extends JFrame  implements ActionListener
     			for(int i=0;i<ns;i++)
     				for(int j=0;j<ns;j++)
     					Integer.parseInt(MyFrame3.ritorno(i,j));
-    			salvataggiostazioni(path,ns);
+    			salvataggiostazioni(path,ns,temp);
     			 dispose();
     		}
     		catch(Exception error)
@@ -114,7 +112,7 @@ public class MyFrame4 extends JFrame  implements ActionListener
    	{
    		return path;   		
    	}
-   	public static void salvataggiostazioni(String path, int ns)
+   	public static void salvataggiostazioni(String path, int ns,int temp)
   	{ 
 	    String stazioni="";
 	    for(int i=0;i<ns;i++)
@@ -123,9 +121,11 @@ public class MyFrame4 extends JFrame  implements ActionListener
 	    try 
 	    {
 	        File file = new File(path);
+	        if(temp==0)
+	        	JOptionPane.showMessageDialog(null,"Il path è stato modificato con il path del programma");
 	         if (file.exists())
-	        	JOptionPane.showMessageDialog(null,"Il file " + path + " gia esiste ");
-	     	else 
+			    JOptionPane.showMessageDialog(null,"Il file " + path + " gia esiste ");
+		     else 
 	        	if (file.createNewFile())
 	          	JOptionPane.showMessageDialog(null,"Il file " + path + " è stato creato ");
 	        	else
