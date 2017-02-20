@@ -66,7 +66,7 @@ public class MyFrame2 extends JFrame  implements ActionListener
  	{	
 
  		String com = e.getActionCommand();
-        String path = "D:/Downloads/stazioni.txt";
+        String path = MyFrame4.returnpath();
         int[] arraytemp = new int[1000];
   		if(com==coll)
  		{	

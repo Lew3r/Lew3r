@@ -62,23 +62,14 @@ public class MyFrame4 extends JFrame  implements ActionListener
 			}
 		}
 		else
-		{	int temp=0,indice=0;
+		{	
 			int ns=MyFrame2.ns();
 			String path = returnpath();
 			int dim=path.length();	
-			System.out.println(path.charAt(dim-1));	
-				if(path.charAt(dim-12)=='s'&& path.charAt(dim-11)=='t'&& path.charAt(dim-10)=='a'&& path.charAt(dim-9)=='z'&&
-				   path.charAt(dim-8)=='i'&& path.charAt(dim-7)=='o'&& path.charAt(dim-6)=='n'&& path.charAt(dim-5)=='i'&& 
-				   path.charAt(dim-4)=='.'&& path.charAt(dim-3)=='t'&& path.charAt(dim-2)=='x'&& path.charAt(dim-1)=='t')
+			if(path.charAt(dim-13)!='\\')
 				{
-					for(int j=0;j<path.length();j++)
-						if(path.charAt(j)=='\\')
-						{
-							temp=1;
-						}
-					if(temp==0)
-						path= path.substring(dim-12);
-								
+					String stringtemp= path.substring(dim-12);
+					path=path.substring(0,dim-12)+ '\\'+stringtemp;								
 				}
 	  		try
     		{
@@ -86,7 +77,7 @@ public class MyFrame4 extends JFrame  implements ActionListener
     			for(int i=0;i<ns;i++)
     				for(int j=0;j<ns;j++)
     					Integer.parseInt(MyFrame3.ritorno(i,j));
-    			salvataggiostazioni(path,ns,temp);
+    			salvataggiostazioni(path,ns);
     			 dispose();
     		}
     		catch(Exception error)
@@ -112,7 +103,7 @@ public class MyFrame4 extends JFrame  implements ActionListener
    	{
    		return path;   		
    	}
-   	public static void salvataggiostazioni(String path, int ns,int temp)
+   	public static void salvataggiostazioni(String path, int ns)
   	{ 
 	    String stazioni="";
 	    for(int i=0;i<ns;i++)
@@ -121,9 +112,7 @@ public class MyFrame4 extends JFrame  implements ActionListener
 	    try 
 	    {
 	        File file = new File(path);
-	        if(temp==0)
-	        	JOptionPane.showMessageDialog(null,"Il path è stato modificato con il path del programma");
-	         if (file.exists())
+	        if (file.exists())
 			    JOptionPane.showMessageDialog(null,"Il file " + path + " gia esiste ");
 		     else 
 	        	if (file.createNewFile())
@@ -147,8 +136,8 @@ public class MyFrame4 extends JFrame  implements ActionListener
 	    }
 	   	catch(IOException e)
 	    {
-	        JOptionPane.showMessageDialog(null, path + " inserire path corretto");
+	    	JOptionPane.showMessageDialog(null, path + " impossibile salvare path non corretto o senza diritti da amministatore");
 	    }
 
-	}   	
+	}   
 }
